@@ -91,7 +91,7 @@ yolo task=detect mode=train model=yolov8n.pt data=BDD100K_YOLO/bdd100k.yaml epoc
 
 ---
 
-## 類別定義（共 9 類）
+## 類別定義（共 7 類）
 
 | 類別名稱            | 類別編號 |
 | --------------- | ---- |
