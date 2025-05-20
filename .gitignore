@@ -1,0 +1,18 @@
+# 忽略原始影像與標註資料夾
+BDD100K/
+BDD100K_YOLO/images/
+BDD100K_YOLO/labels/
+
+# Python 雜項快取與暫存檔
+__pycache__/
+*.pyc
+*.pkl
+.ipynb_checkpoints/
+
+# 模型檔與訓練結果
+*.pt
+runs/
+
+# PyCharm 設定檔與虛擬環境
+.idea/
+venv/
