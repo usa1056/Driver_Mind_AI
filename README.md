@@ -41,8 +41,8 @@ Driver Mind AI/
 建議使用 Conda 建立處理環境：
 
 ```bash
-conda create -n blindguard python=3.12
-conda activate blindguard
+conda create -n drivermind_ai python=3.12
+conda activate drivermind_ai
 pip install -r requirements.txt
 ```
 
