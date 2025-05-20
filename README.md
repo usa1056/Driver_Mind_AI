@@ -101,9 +101,7 @@ yolo task=detect mode=train model=yolov8n.pt data=BDD100K_YOLO/bdd100k.yaml epoc
 | motor           | 3    |
 | bike            | 4    |
 | rider           | 5    |
-| drivable area   | 6    |
-| lane            | 7    |
-| traffic light   | 8    |
+| traffic light   | 6    |
 
 ---
 
