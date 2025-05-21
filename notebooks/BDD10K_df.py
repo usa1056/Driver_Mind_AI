@@ -51,3 +51,4 @@ print(df.groupby("class_name")["area"].mean())
 
 # 類別數量統計
 print(df["class_name"].value_counts())
+print(df["class_name"].value_counts())
