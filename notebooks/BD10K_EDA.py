@@ -126,3 +126,65 @@ axs[2, 1].tick_params(axis='x', rotation=15)
 # ========= 6. 調整圖表排版與間距 =========
 plt.tight_layout(rect=[0, 0.01, 1, 0.95])  # ← [left, bottom, right, top] 空間比例
 plt.show()
+
+"""
+下方程式碼區塊目的為產生bbox中心點熱力圖
+"""
+
+# ========= 初始化統計容器（新增中心點清單 center_points） =========
+class_counter = Counter()
+bbox_counts = []
+area_list = []
+aspect_ratios = []
+center_points = []  # ⬅ 新增：記錄 bbox 中心點 (x, y)
+class_area_dict = {i: [] for i in id2label.keys()}
+
+# ========= 遍歷每個標註檔案 .txt =========
+for file in os.listdir(label_dir):
+    if not file.endswith(".txt"):
+        continue
+
+    file_path = os.path.join(label_dir, file)
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+
+    bbox_counts.append(len(lines))
+
+    for line in lines:
+        parts = line.strip().split()
+        class_id = int(parts[0])
+        x_center, y_center = float(parts[1]), float(parts[2])  # ⬅ 中心點座標
+        w, h = float(parts[3]), float(parts[4])
+        area = w * h
+        ratio = w / h if h != 0 else 0
+
+        class_counter[class_id] += 1
+        area_list.append(area)
+        aspect_ratios.append(ratio)
+        class_area_dict[class_id].append(area)
+        center_points.append((x_center, y_center))  # ⬅ 儲存中心點
+
+# ========= 額外視覺化：bbox 中心點 Heatmap =========
+import pandas as pd
+
+# 轉為 DataFrame，方便 seaborn 處理
+df_center = pd.DataFrame(center_points, columns=['x_center', 'y_center'])
+
+# 使用 Seaborn KDE 繪製熱力圖（2D 分佈）
+plt.figure(figsize=(6, 5))
+sns.kdeplot(
+    x=df_center['x_center'],
+    y=df_center['y_center'],
+    cmap='Reds',
+    fill=True,
+    thresh=0.05,
+    bw_adjust=0.5
+)
+plt.title("BBox Center Position Heatmap")
+plt.xlabel("x_center (normalized)")
+plt.ylabel("y_center (normalized)")
+plt.xlim(0, 1)
+plt.ylim(0, 1)
+plt.gca().invert_yaxis()  # 讓畫面符合圖片視角（左上為原點）
+plt.tight_layout()
+plt.show()
