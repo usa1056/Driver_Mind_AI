@@ -7,24 +7,25 @@
 ## 專案資料結構
 
 ```
-Driver Mind AI/
-├── datasets/                # BDD100K → YOLOv8 格式轉換器
+Driver_Mind_AI/
+├── datasets/                    # 資料轉換腳本與前處理程式
 │   └── convert_bdd_to_yolo.py
-├── BDD100K/                 # 原始資料集 ( 請手動下載 )
-│   ├── train/img, ann
-│   ├── val/img, ann
-│   └── test/img, ann
-├── BDD100K_YOLO/
-│   ├── images/train,val,test     # 對應圖片
-│   ├── labels/train,val,test     # YOLO 格式標準 (.txt)
-│   └── bdd100k.yaml              # YOLOv8 訓練設定檔
-├── notebooks/              # EDA、標準統計等筆記本
-├── scripts/                # 訓練/評估主程式
-├── models/                 # 儲存模型檔案
-├── docs/                   # 專案相關圖/文檔
-│   ├── images/             
-├── requirements.txt        # 本專案所使用的相關套件
-└── README.md               # 本說明文件
+├── BDD10K/                      # 原始資料集（請手動下載放置）
+│   ├── train/img + ann
+│   ├── val/img + ann
+│   └── test/img + ann
+├── BDD10K_YOLO/
+│   ├── images/train,val,test   # YOLO 格式對應圖片
+│   ├── labels/train,val,test   # YOLO 格式標註（.txt）
+│   └── bdd10k.yaml             # YOLOv8 訓練用設定檔
+├── notebooks/                  # EDA / 資料分析
+├── scripts/                    # 訓練 / 推論主程式
+├── models/                     # 模型儲存與版本控制
+├── docs/                       # 專案說明圖與文檔
+│   └── images/
+├── requirements.txt            # 套件依賴
+├── LICENSE                     # 授權條款
+└── README.md                   # 本說明文件
 ```
 ---
 
@@ -50,14 +51,20 @@ pip install -r requirements.txt
 
 ## 資料準備
 
-請自行下載 **BDD100K dataset (DataSet Ninja JSON 版本)**，放置於 `BlindGuard/BDD100K` 資料夾下，結構如下：  
-Link: https://datasetninja.com/bdd100k
+請自行下載 BDD10K dataset（DataSet Ninja 版本），並放置於 Driver_Mind_AI/BDD10K 資料夾下。
+下載連結：https://datasetninja.com/bdd100k-10k
 
 ```
-BDD100K/
-├── train/img + ann
-├── val/img + ann
-└── test/img + ann
+BDD10K/
+├── train/
+│   ├── img/
+│   └── ann/
+├── val/
+│   ├── img/
+│   └── ann/
+└── test/
+    ├── img/
+    └── ann/
 ```
 
 ---
@@ -67,10 +74,12 @@ BDD100K/
 執行：
 
 ```bash
-python datasets/convert_bdd_to_yolo.py
+python datasets/convert_bdd_to_yolo_2.py
 ```
 
-輸出檔案會存到 `BDD100K_YOLO/labels/`。
+輸出檔案會存到`BDD10K_YOLO/labels/train/`  
+`BDD10K_YOLO/labels/val/`  
+`BDD10K_YOLO/labels/test/`。
 
 ---
 
@@ -79,7 +88,7 @@ python datasets/convert_bdd_to_yolo.py
 使用 YOLOv8 CLI 指令進行訓練：
 
 ```bash
-yolo task=detect mode=train model=yolov8n.pt data=BDD100K_YOLO/bdd100k.yaml epochs=50 imgsz=640
+yolo task=detect mode=train model=yolov8n.pt data=BDD100K_YOLO/bdd10k.yaml epochs=50 imgsz=640
 ```
 
 ---
