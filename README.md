@@ -41,8 +41,8 @@ Driver Mind AI/
 建議使用 Conda 建立處理環境：
 
 ```bash
-conda create -n blindguard python=3.12
-conda activate blindguard
+conda create -n drivermind_ai python=3.12
+conda activate drivermind_ai
 pip install -r requirements.txt
 ```
 
@@ -91,7 +91,7 @@ yolo task=detect mode=train model=yolov8n.pt data=BDD100K_YOLO/bdd100k.yaml epoc
 
 ---
 
-## 類別定義（共 9 類）
+## 類別定義（共 6 類）
 
 | 類別名稱            | 類別編號 |
 | --------------- | ---- |
@@ -101,9 +101,6 @@ yolo task=detect mode=train model=yolov8n.pt data=BDD100K_YOLO/bdd100k.yaml epoc
 | motor           | 3    |
 | bike            | 4    |
 | rider           | 5    |
-| drivable area   | 6    |
-| lane            | 7    |
-| traffic light   | 8    |
 
 ---
 
