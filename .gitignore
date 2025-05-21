@@ -1,5 +1,6 @@
 # 忽略原始影像與標註資料夾
 BDD100K/
+BDD10K/                          # ⬅️ 新增：忽略 10K 資料集資料夾
 BDD100K_YOLO/images/
 BDD100K_YOLO/labels/
 
