@@ -19,3 +19,4 @@ runs/
 # PyCharm 設定檔與虛擬環境
 .idea/
 venv/
+/BDD10K
