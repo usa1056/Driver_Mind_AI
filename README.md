@@ -8,24 +8,36 @@
 
 ```
 Driver_Mind_AI/
-├── datasets/                    # 資料轉換腳本與前處理程式
-│   └── convert_bdd_to_yolo.py
-├── BDD10K/                      # 原始資料集（請手動下載放置）
+├── BDD10K/                    # 10K 原始資料集（請手動下載放置）
 │   ├── train/img + ann
 │   ├── val/img + ann
 │   └── test/img + ann
-├── BDD10K_YOLO/
-│   ├── images/train,val,test   # YOLO 格式對應圖片
-│   ├── labels/train,val,test   # YOLO 格式標註（.txt）
-│   └── bdd10k.yaml             # YOLOv8 訓練用設定檔
-├── notebooks/                  # EDA / 資料分析
-├── scripts/                    # 訓練 / 推論主程式
-├── models/                     # 模型儲存與版本控制
-├── docs/                       # 專案說明圖與文檔
+├── BDD10K_YOLO/               # 轉換後的 YOLOv8 資料（10K）
+│   ├── images/train,val,test
+│   ├── labels/train,val,test
+│   └── bdd10k.yaml
+├── BDD100K/                   # 100K 原始資料集（檔案過大/改以10K訓練）
+│   ├── train/img + ann
+│   ├── val/img + ann
+│   └── test/img + ann
+├── BDD100K_YOLO/              # 轉換後的 YOLOv8 資料（100K）
+│   ├── images/train,val,test
+│   ├── labels/train,val,test
+│   └── bdd100k.yaml
+├── datasets/                  # 資料轉換腳本
+│   ├── convert_bdd_to_yolo.py
+│   └── convert_bdd_to_yolo_2.py
+├── docs/                      # 說明文檔與圖示
 │   └── images/
-├── requirements.txt            # 套件依賴
-├── LICENSE                     # 授權條款
-└── README.md                   # 本說明文件
+│       └── architecture_v1.png
+├── models/                    # 模型儲存區
+├── notebooks/                 # EDA 與實驗記錄
+├── scripts/                   # 模型訓練、推論主程式
+├── .gitignore
+├── .gitattributes
+├── LICENSE
+├── README.md
+└── Requirements.txt
 ```
 ---
 
