@@ -1,0 +1,9 @@
+#安裝cv2
+pip install opencv-python
+#安裝dlib
+pip install C:\Downloads\dlib-19.24.2-cp312-cp312-win_amd64.whl
+#安裝imutils
+pip install imutils
+
+
+要依據使用者調整眼部大小參數
