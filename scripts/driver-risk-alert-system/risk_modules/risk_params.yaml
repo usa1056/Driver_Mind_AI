@@ -1,0 +1,37 @@
+risk_params:
+  base_score:
+    low: 1
+    mid: 2
+    high: 3
+
+  stay_weight:
+    low: 0.0
+    mid: 0.1
+    high: 0.5
+
+  speed:
+    fps: 30
+    log_scale: true
+    gamma: 0.4
+    max_speed: 1000
+    jump_threshold: 80
+
+  score_threshold:
+    high: 5.5
+    mid: 3.5
+
+  smoothing:
+    history_length: 5
+
+  risk_area:
+    red_height: 150
+    orange_height: 70
+    green_height: 180
+    dynamic_scale_base: 400
+    scale_min: 0.5
+    scale_max: 0.6
+
+  id_stability:
+    jump_penalty: true
+    decay_on_jump: true
+    decay_rate: 1
