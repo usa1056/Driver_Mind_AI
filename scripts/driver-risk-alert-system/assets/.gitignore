@@ -1,0 +1,21 @@
+# Python 快取與暫存檔案
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook 快取（如果有用到）
+.ipynb_checkpoints/
+
+# VSCode 編輯器快取設定（選擇性加入）
+.vscode/
+
+# 輸出影片與圖片（不需版本控制）
+output.mp4
+*.avi
+*.mov
+*.png
+*.jpg
+
+# 保留測試影片（assets 資料夾內的 mp4 不會被忽略）
+!assets/*.mp4
