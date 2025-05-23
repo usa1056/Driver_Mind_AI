@@ -20,3 +20,21 @@ runs/
 .idea/
 venv/
 /BDD10K
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# macOS Finder metadata
+Icon?
+._*
+
+# Spotlight
+.Spotlight-V100
+
+# Trash
+.Trashes
+
+# macOS volume info
+.VolumeIcon.icns
