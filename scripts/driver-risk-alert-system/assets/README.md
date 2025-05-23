@@ -1,6 +1,6 @@
 # Driver Risk Alert System 🚗⚠️
 
-本專案整合 YOLOv8 + Object Tracking + ROI 區域分析 + 風險評分邏輯，實現即時駕駛風險預測與視覺化提示效果。
+整合 YOLOv8 + Object Tracking + ROI 區域分析 + 風險評分邏輯，實現即時駕駛風險預測與視覺化提示效果。
 
 ---
 
