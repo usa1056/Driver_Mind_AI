@@ -3,8 +3,17 @@ import mediapipe as mp
 import numpy as np
 import time
 import tkinter as tk
+import os # 新增
+from speech_alert_system import generate_and_play_audio # 新增
 
 mp_face_mesh = mp.solutions.face_mesh
+
+# 移除 _last_drowsiness_alert_time, _drowsiness_alert_cooldown_seconds, _generated_audio_files_drowsiness 全域變數
+# 這些現在由 speech_alert_system 內部管理
+
+
+# 移除 generate_and_play_audio_drowsiness 函式，改用 speech_alert_system 中的函式
+
 
 def euclidean_distance(a, b):
     return np.linalg.norm(np.array(a) - np.array(b))
@@ -22,6 +31,8 @@ def mouth_aspect_ratio(mouth_landmarks):
     return (A + B) / (2.0 * C)
 
 def start_drowsiness_detection(shared_alert):
+    # global _last_drowsiness_alert_time # 不再需要，因為由 speech_alert_system 管理
+
     FPS = 30
     TIRED_SECONDS = 2.0
     CONSEC_FRAMES = int(FPS * TIRED_SECONDS)
@@ -137,6 +148,10 @@ def start_drowsiness_detection(shared_alert):
                         cv2.putText(frame, "DROWSINESS ALERT!", (10, 60),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
+                        # 播放語音提示
+                        generate_and_play_audio("你是來開車還是來睡覺的", "drowsiness_alert", cooldown_seconds=5)
+
+
                     # 哈欠偵測，雙閾值判斷避免連續計數
                     if mar > MAR_OPEN_THRESHOLD:
                         if not yawn_flag:
@@ -150,6 +165,8 @@ def start_drowsiness_detection(shared_alert):
                         YAWN_ALARM_ON = True
                         ALARM_END_TIME = time.time() + ALERT_DURATION
                         YAWN_ALERT_COMPLETED = True  # 標示已完成一次三次哈欠警示
+                        # 播放哈欠語音提示 (如果你想為哈欠加入單獨的語音)
+                        # generate_and_play_audio("請注意，您已連續打哈欠多次，請休息！", "yawn_alert", cooldown_seconds=10)
 
                     # 顯示數值資訊
                     cv2.putText(frame, f"EAR: {ear:.2f}", (480, 30),
@@ -183,4 +200,3 @@ def start_drowsiness_detection(shared_alert):
 
     cap.release()
     cv2.destroyAllWindows()
-
