@@ -1,0 +1,54 @@
+risk_params:
+  base_score:
+    low: 1    
+    mid: 2    
+    high: 4  
+    side_right: 3.5
+    side_left: 3.5
+
+  stay_weight: # 滯留時間對分數影響權重
+    low: 0.0  
+    mid: 0.1  
+    high: 0.7
+    side_right: 0.5
+    side_left: 0.5
+
+  speed:
+    fps: 30                # 每秒幀數，用於速度計算
+    log_scale: true        # 是否對速度取 log1p，使速度影響平滑
+    gamma: 0.4             # 速度在風險評分中的加權係數
+    max_speed: 1000        # 最大速度限制（目前未用，可作為 upper bound）
+    jump_threshold: 80     # 若物體中心點移動距離 > 80 px，視為跳動
+
+  score_threshold:
+    high: 4.5   # 紅框門檻（分數 > ... 才視為高風險）
+    mid: 2.0    # 橙框門檻（分數 > ... 才視為中風險）
+
+  smoothing:
+    history_length: 5   # 分數平滑歷史長度（用過去幾幀平均）
+
+  risk_area:
+    red_height: 150         # 紅區初始高度（像素）
+    orange_height: 70       # 橙區高度
+    green_height: 180       # 綠區高度
+    dynamic_scale_base: 400 # ROI 長度計算的基底參數
+    scale_min: 0.5          # ROI 縮放下限（防止速度太小造成過短）
+    scale_max: 0.6          # ROI 縮放上限（防止速度過快造成過長）
+
+  id_stability:
+    jump_penalty: true     # 若 ID 跳動是否懲罰 stay_counter
+    decay_on_jump: true    # ID 跳動時是否遞減停留計數
+    decay_rate: 1          # 跳動時的滯留計數遞減量（每次減1）
+
+  decay:
+    speed_threshold: 0.1         # 若物體速度低於此值（幾乎靜止），才進入衰退判斷
+    decay_rate: 0.9              # 衰退倍率（每幀風險乘以此值）
+    decay_frame_threshold: 10    # 滯留幀數滿幾幀後才開始衰退
+
+  warning:
+    yellow_score_threshold: 3.0  # 黃區分數超過此值才觸發提醒（且只提醒一次）
+    red_score_threshold: 5.5     # 紅區分數超過此值才啟動遞增頻率提醒
+
+  optical_flow:
+    roi_top_ratio: 0.6
+    roi_bottom_ratio: 1.0

@@ -21,7 +21,7 @@ def mouth_aspect_ratio(mouth_landmarks):
     C = euclidean_distance(mouth_landmarks[12], mouth_landmarks[16])  # 左右嘴角
     return (A + B) / (2.0 * C)
 
-def run_drowsiness_detection():
+def start_drowsiness_detection(shared_alert):
     FPS = 30
     TIRED_SECONDS = 2.0
     CONSEC_FRAMES = int(FPS * TIRED_SECONDS)
@@ -133,6 +133,7 @@ def run_drowsiness_detection():
                                 YAWN_ALERT_COMPLETED = False
 
                     if ALARM_ON:
+                        shared_alert[0] = True
                         cv2.putText(frame, "DROWSINESS ALERT!", (10, 60),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
@@ -183,5 +184,3 @@ def run_drowsiness_detection():
     cap.release()
     cv2.destroyAllWindows()
 
-if __name__ == "__main__":
-    run_drowsiness_detection()
