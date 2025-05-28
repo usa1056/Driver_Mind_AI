@@ -1,0 +1,17 @@
+# YAML 設定檔：YOLOv8 訓練專用（for BDD10K Dataset）
+
+path: ../BDD10K_YOLO  # 資料集根路徑（可依實際位置調整）
+train: images/train    # 訓練資料夾相對路徑
+val: images/val        # 驗證資料夾相對路徑
+test: images/test      # 測試資料夾相對路徑（可選）
+
+# 分類名稱
+names:
+  0: car         # 車
+  1: person      # 行人
+  2: truck       # 卡車與巴士（bus/trailer/caravan）
+  3: motor       # 機車
+  4: bike        # 腳踏車
+  5: rider       # 騎士（二輪）
+
+nc: 6  # 類別總數
