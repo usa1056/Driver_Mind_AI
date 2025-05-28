@@ -1,4 +1,3 @@
-
 from ultralytics import YOLO
 import cv2
 import numpy as np
@@ -15,6 +14,10 @@ from risk_modules.risk_analyzer import *
 from risk_modules.Land_detection import *
 from risk_modules.warning_controller import *
 import yaml
+
+# 新增語音輸出模組的導入
+from speech_alert_system import generate_and_play_audio
+
 
 class LaneTracker:
     def __init__(self, shared_alert):
@@ -136,6 +139,7 @@ class LaneTracker:
                     self.risk_score_history[track_id].append(score)
                     smoothed_score = np.mean(self.risk_score_history[track_id])
 
+                    # 根據 smoothed_score 重新確認 level，因為 analyze_risk 返回的 level 只是初步判斷
                     if smoothed_score > self.risk_config['score_threshold']['high']:
                         level = "high"
                     elif smoothed_score > self.risk_config['score_threshold']['mid']:
@@ -148,15 +152,24 @@ class LaneTracker:
                     now = time.time()
                     if should_warn(track_id, now, level, smoothed_score, stay, self.risk_config):
                         print(f"⚠️ 提醒觸發！ID={track_id}, Level={level}, Score={smoothed_score:.2f}")
+                        # 根據風險等級播放不同的語音
+                        if level == "yellow": # 黃色警示區 (來自 should_warn 中的 'yellow' level)
+                            generate_and_play_audio("距離有點近了，建議您放慢速度", "risk_side_alert", cooldown_seconds=5)
+                        elif level == "red": # 紅色警示區 (來自 should_warn 中的 'red' level)
+                            generate_and_play_audio("已進入危險範圍，請立即減速", "risk_high_alert", cooldown_seconds=5)
+
 
                 annotated_frame = results[0].plot()
-                draw_risk_overlay(annotated_frame, risky_objects, roi_dict)
+                draw_risk_overlay(annotated_frame, risky_objects, roi_dict) # 此處 draw_risk_overlay 不再負責語音
 
                 cv2.putText(annotated_frame, f"ROI Scale: {scale:.3f}", (15, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 0), 2)
                 cv2.putText(annotated_frame, f"Speed: {speed:.2f}", (15, 70), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 0), 2)
 
                 if self.shared_alert[0]:
                     cv2.putText(annotated_frame, "DROWSINESS ALERT!", (15, 140), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
+                    # 疲勞警示語音：直接在這裡觸發，因為這是疲勞模組的輸出
+                    generate_and_play_audio("你是來開車還是來睡覺的", "drowsiness_alert", cooldown_seconds=5)
+
 
                 frame_time = time.time() - frame_start_time
                 fps = 1.0 / frame_time
