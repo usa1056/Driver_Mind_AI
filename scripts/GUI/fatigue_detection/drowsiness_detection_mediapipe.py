@@ -149,7 +149,7 @@ def start_drowsiness_detection(shared_alert):
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
                         # 播放語音提示
-                        generate_and_play_audio("你是來開車還是來睡覺的", "drowsiness_alert", cooldown_seconds=5)
+                        generate_and_play_audio("偵測到你疲勞了，請保持清醒或稍作休息", "drowsiness_alert", cooldown_seconds=5)
 
 
                     # 哈欠偵測，雙閾值判斷避免連續計數
